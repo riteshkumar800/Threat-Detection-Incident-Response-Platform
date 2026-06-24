@@ -1,67 +1,244 @@
-```ruby
-███████╗██╗███████╗███╗   ███╗
-██╔════╝██║██╔════╝████╗ ████║
-███████╗██║█████╗  ██╔████╔██║
-╚════██║██║██╔══╝  ██║╚██╔╝██║
-███████║██║███████╗██║ ╚═╝ ██║
-╚══════╝╚═╝╚══════╝╚═╝     ╚═╝
+# SIEM Dashboard
+
+A full-stack Security Information and Event Management (SIEM) platform that provides real-time log ingestion, event correlation, alert management, and MITRE ATT&CK-based attack simulation.
+
+The platform is designed to help users understand how modern Security Operations Centers (SOCs) monitor, detect, and investigate security events.
+
+---
+
+## Features
+
+### Real-Time Log Monitoring
+
+* Collect security events in real time
+* Centralized event storage
+* Searchable log viewer
+* Live event updates
+
+### Event Correlation Engine
+
+Supports multiple detection rule types:
+
+* Threshold Rules
+* Sequence Rules
+* Aggregation Rules
+
+Automatically correlates events and generates alerts.
+
+### Alert Management
+
+* Alert generation
+* Alert investigation workflow
+* Alert acknowledgement
+* Alert resolution
+* False positive handling
+
+### MITRE ATT&CK Simulation
+
+Built-in attack simulation scenarios mapped to MITRE ATT&CK techniques:
+
+* Brute Force Attack
+* DNS Tunneling
+* Phishing
+* Privilege Escalation
+
+### Dashboard Analytics
+
+* Event Timeline
+* Severity Breakdown
+* Alert Statistics
+* Top Event Sources
+* Open Alert Tracking
+
+---
+
+## Architecture
+
+```text
+Browser (React)
+        │
+        ▼
+      Nginx
+        │
+        ▼
+   Flask Backend
+        │
+ ┌──────┴──────┐
+ ▼             ▼
+MongoDB      Redis
 ```
 
-[![Cybersecurity Projects](https://img.shields.io/badge/Cybersecurity--Projects-Project%20%2314-red?style=flat&logo=github)](https://github.com/CarterPerez-dev/Cybersecurity-Projects/tree/main/PROJECTS/intermediate/siem-dashboard)
-[![Python](https://img.shields.io/badge/Python-3.14+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org)
-[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=black)](https://react.dev)
-[![License: AGPLv3](https://img.shields.io/badge/License-AGPL_v3-purple.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![Live Demo](https://img.shields.io/badge/Live-siem.carterperez--dev.com-green?style=flat&logo=googlechrome)](https://siem.carterperez-dev.com/)
-[![Docker](https://img.shields.io/badge/Docker-ready-2496ED?style=flat&logo=docker)](https://www.docker.com)
+### Components
 
-> Full-stack SIEM dashboard with real-time log correlation and MITRE ATT&CK attack scenario simulation engine.
+#### Frontend
 
-*This is a quick overview — security theory, architecture, and full walkthroughs are in the [learn modules](#learn).*
+* React 19
+* TypeScript
+* Vite
+* TanStack Query
+* Zustand
 
-**[Screenshots & live demo →](DEMO.md)**
+#### Backend
 
-## What It Does
+* Flask
+* Gunicorn
+* Pydantic
 
-- Real-time log ingestion and event correlation with three rule types (Threshold, Sequence, Aggregation)
-- Four YAML-based attack playbooks mapped to MITRE ATT&CK (brute force, DNS tunneling, phishing, privilege escalation)
-- Server-Sent Events for live alert feed with paginated, filterable log viewer
-- Alert lifecycle management (acknowledge, investigate, resolve, false positive)
-- Attack simulation engine that generates realistic multi-stage security events
-- Built with Just for task automation with full Docker Compose deployment
+#### Data Layer
+
+* MongoDB
+* Redis Streams
+
+#### Infrastructure
+
+* Docker
+* Docker Compose
+* Nginx
+
+---
+
+## Project Structure
+
+```text
+siem-dashboard/
+│
+├── frontend/
+├── backend/
+├── conf/
+├── assets/
+├── learn/
+├── compose.yml
+└── README.md
+```
+
+---
 
 ## Quick Start
+
+### Prerequisites
+
+* Docker Desktop
+* Docker Compose
+
+Verify installation:
+
+```bash
+docker --version
+docker compose version
+```
+
+---
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+cd siem-dashboard
+```
+
+---
+
+### Create Environment File
+
+```bash
+cp .env.example .env
+```
+
+---
+
+### Start the Platform
 
 ```bash
 docker compose up -d
 ```
 
-Visit `http://localhost:8431` or the live demo at [siem.carterperez-dev.com](https://siem.carterperez-dev.com/)
+---
 
-> [!TIP]
-> This project uses [`just`](https://github.com/casey/just) as a command runner. Type `just` to see all available commands.
->
-> Install: `curl -sSf https://just.systems/install.sh | bash -s -- --to ~/.local/bin`
+### Verify Containers
 
-## Stack
+```bash
+docker ps
+```
 
-**Backend:** Flask, MongoEngine, Redis Streams, Pydantic, Argon2, JWT, Gunicorn
+Expected services:
 
-**Frontend:** React 19, TypeScript, Vite, TanStack Query, Zustand, visx, SCSS Modules
+```text
+siem-nginx
+siem-backend
+siem-mongo
+siem-redis
+```
 
-**Data:** MongoDB 8, Redis 7
+---
 
-## Learn
+### Access Dashboard
 
-This project includes step-by-step learning materials covering security theory, architecture, and implementation.
+Open:
 
-| Module | Topic |
-|--------|-------|
-| [00 - Overview](learn/00-OVERVIEW.md) | Prerequisites and quick start |
-| [01 - Concepts](learn/01-CONCEPTS.md) | Security theory and real-world breaches |
-| [02 - Architecture](learn/02-ARCHITECTURE.md) | System design and data flow |
-| [03 - Implementation](learn/03-IMPLEMENTATION.md) | Code walkthrough |
-| [04 - Challenges](learn/04-CHALLENGES.md) | Extension ideas and exercises |
+```text
+http://localhost:8431
+```
 
-## License
+---
 
-AGPL 3.0
+## Available Pages
+
+### Dashboard
+
+Provides an overview of:
+
+* Total Events
+* Total Alerts
+* Open Alerts
+* Critical Alerts
+* Event Timeline
+* Severity Breakdown
+
+### Log Viewer
+
+Browse and investigate collected security events.
+
+### Alerts
+
+Manage and investigate generated alerts.
+
+### Rules
+
+View and manage event correlation rules.
+
+### Scenarios
+
+Launch attack simulations to generate security events and test detection logic.
+
+---
+
+## Technology Stack
+
+| Layer            | Technology              |
+| ---------------- | ----------------------- |
+| Frontend         | React, TypeScript, Vite |
+| Backend          | Flask, Gunicorn         |
+| Database         | MongoDB                 |
+| Cache/Streams    | Redis                   |
+| Containerization | Docker                  |
+| Reverse Proxy    | Nginx                   |
+
+---
+
+## Learning Objectives
+
+This project demonstrates:
+
+* SIEM Fundamentals
+* Event Correlation
+* Threat Detection
+* Alert Management
+* MITRE ATT&CK Mapping
+* Dockerized Application Deployment
+* Full-Stack Security Engineering
+
+---
+
+## Disclaimer
+
+This project is intended for educational and research purposes. Attack simulations should only be executed in controlled environments and authorized systems.
